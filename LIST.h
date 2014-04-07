@@ -16,4 +16,6 @@ struct node
   link next;
 };
 
+void new_edge( link vertex_from, int vertex_to);
+
 #endif

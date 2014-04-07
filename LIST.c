@@ -11,9 +11,13 @@
 
 void insert( link vertex_from, link vertex_to)
 {
-  link next = vertex_from->next;
-  vertex_to->next = next;
-  vertex_from->next = vertex_to;
+  link node = vertex_from;
+  int index = vertex_to->index;
+  while( node->next != NULL && node->next->index < index)
+    node = node->next;
+
+  vertex_to->next = node->next;
+  node->next = vertex_to;
 }
 
 link new_link( int vertex)
@@ -29,4 +33,3 @@ void new_edge( link vertex_from, int vertex_to)
   link l = new_link( vertex_to);
   insert( vertex_from, l);
 }
-
