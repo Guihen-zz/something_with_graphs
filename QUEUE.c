@@ -41,3 +41,8 @@ link dequeue()
 
   return l;
 }
+
+bool queue_empty()
+{
+  return Queue->next == Queue;
+}

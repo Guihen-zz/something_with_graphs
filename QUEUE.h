@@ -9,6 +9,7 @@
  *
  ******************************************************************************/
 
+ #include <stdbool.h>
  #include "LIST.h"
 
 typedef struct content *queue;
@@ -20,5 +21,6 @@ struct content
 
 void enqueue( link);
 link dequeue( void);
+bool queue_empty(void);
 
 #endif

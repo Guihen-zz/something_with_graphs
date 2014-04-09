@@ -44,7 +44,8 @@ int main( int argc, char* argv[])
   FILE *input;
   int vertex_from, vertex_to, i;
   int graph_base_size = INITIAL_GRAPH_BASE_SIZE, max;
-  int *distancias;
+  int *distances, distance;
+  link aux, head;
   link *graph_base = init_graph_base( graph_base_size);
 
   if( argc != 2)
@@ -73,10 +74,28 @@ int main( int argc, char* argv[])
     new_edge( graph_base[vertex_from], vertex_to);
   }
 
-  distancias = malloc( sizeof( int) * graph_base_size + 1);
+  distances = malloc( sizeof( int) * graph_base_size + 1);
   for( i = 1; i <= graph_base_size; i++)
-    distancias[i] = -1;
+    distances[i] = -1;
 
+  enqueue( graph_base[6]);
+  distance = 0;
+  while( !queue_empty())
+  {
+    distance++;
+    head = dequeue();
+    for( aux = head->next; aux != head; aux = aux->next)
+    {
+      if( distances[aux->index] == -1)
+      {
+        printf("%d\n", aux->index);
+        distances[aux->index] = distance;
+        enqueue( graph_base[aux->index]);
+      }
+    }
+  }
+
+  printf("%d\n", distances[4]);
   printf("Terminou\n");
 
   return 0;
