@@ -9,15 +9,22 @@
 #include <stdlib.h>
 #include "LIST.h"
 
-void insert( link vertex_from, link vertex_to)
+/* link to a circular list. */
+link init_link()
 {
-  link node = vertex_from;
-  int index = vertex_to->index;
-  while( node->next != NULL && node->next->index < index)
-    node = node->next;
+  link l = malloc( sizeof( link *));
+  l->next = l;
+  return l;
+}
 
-  vertex_to->next = node->next;
-  node->next = vertex_to;
+void insert( link head, link vertex_to)
+{
+  int index = vertex_to->index;
+  link aux; /* aux point to the cel will be the vertex_to */
+  for( head->index = index, aux = head; aux->next->index < index; aux = aux->next);
+
+  vertex_to->next = aux->next;
+  aux->next = vertex_to;
 }
 
 link new_link( int vertex)

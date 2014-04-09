@@ -15,7 +15,7 @@ link *init_graph_base( int size)
   int i;
   link *l = malloc( sizeof( link) * size);
   for (i = 0; i < 100; i++)
-    l[i] = malloc( sizeof( link *));
+    l[i] = init_link();
   return l;
 }
 
