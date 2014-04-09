@@ -22,7 +22,7 @@ link *init_graph_base( int size)
 int main( int argc, char* argv[])
 {
   FILE *input;
-  int vertex_from, vertex_to;
+  int vertex_from, vertex_to, i;
   link *graph_base = init_graph_base( 100);
 
   if( argc != 2)
@@ -43,8 +43,6 @@ int main( int argc, char* argv[])
   {
     new_edge( graph_base[vertex_from], vertex_to);
   }
-
-  printf("%d %d %d\n", graph_base[12]->next->index, graph_base[12]->next->next->index, graph_base[12]->next->next->next->index);
 
   printf("Terminou\n");
 

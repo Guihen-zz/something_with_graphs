@@ -18,5 +18,6 @@ struct node
 
 void new_edge( link vertex_from, int vertex_to);
 link init_link( void);
+int count_edges( link head);
 
 #endif
