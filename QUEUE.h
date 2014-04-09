@@ -15,12 +15,12 @@
 typedef struct content *queue;
 struct content
 {
-  link node;
+  int vertex;
   queue next;
 };
 
-void enqueue( link);
-link dequeue( void);
+void enqueue( int vertex_index);
+int dequeue( void);
 bool queue_empty(void);
 
 #endif

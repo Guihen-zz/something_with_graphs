@@ -11,7 +11,7 @@
 
 static queue Queue = NULL;
 
-void enqueue( link node)
+void enqueue( int index)
 {
   queue new = malloc( sizeof( *new));
   queue aux;
@@ -24,18 +24,18 @@ void enqueue( link node)
 
   for( aux = Queue->next; aux->next != Queue; aux = aux->next);
   
-  new->node = node;
+  new->vertex = index;
   new->next = aux->next;
   aux->next = new;
 }
 
-link dequeue()
+int dequeue()
 {
   queue node = Queue->next;
-  link l;
-  if( node == Queue) return NULL;
+  int l;
+  if( node == Queue) return -1;
   
-  l = node->node;
+  l = node->vertex;
   Queue->next = node->next;
   free( node);
 

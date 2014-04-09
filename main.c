@@ -39,12 +39,14 @@ link *rezise_graph_base( link *graph_base, int graph_base_size, int new_size)
   return gb;
 }
 
+
+
 int main( int argc, char* argv[])
 {
   FILE *input;
   int vertex_from, vertex_to, i;
   int graph_base_size = INITIAL_GRAPH_BASE_SIZE, max;
-  int *distances, distance;
+  int *distances, distance, vertex;
   link aux, head;
   link *graph_base = init_graph_base( graph_base_size);
 
@@ -78,24 +80,29 @@ int main( int argc, char* argv[])
   for( i = 1; i <= graph_base_size; i++)
     distances[i] = -1;
 
-  enqueue( graph_base[6]);
-  distance = 0;
+  enqueue( 6);
+  distances[6] = 0;
   while( !queue_empty())
   {
-    distance++;
-    head = dequeue();
+    vertex = dequeue();
+    head = graph_base[vertex];
     for( aux = head->next; aux != head; aux = aux->next)
     {
       if( distances[aux->index] == -1)
       {
-        printf("%d\n", aux->index);
-        distances[aux->index] = distance;
-        enqueue( graph_base[aux->index]);
+        distances[aux->index] = vertex;
+        enqueue( aux->index);
       }
     }
   }
 
-  printf("%d\n", distances[4]);
+  distance = distances[1];
+  while( distance > 0)
+  {
+    printf("%d\n", distance);
+    distance = distances[distance];
+  }
+  
   printf("Terminou\n");
 
   return 0;
