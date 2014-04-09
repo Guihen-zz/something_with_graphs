@@ -45,6 +45,8 @@ int count_edges( link head)
 {
   int n;
   link aux = head->next;
-  for( n = 0; aux != head; aux = aux->next) n++;
+  for( n = 0; aux != head; aux = aux->next) {
+    n++;
+  }
   return n;
 }
