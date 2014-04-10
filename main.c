@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include "LIST.h"
 #include "QUEUE.h"
+ #include "STACK.h"
 
 #define INITIAL_GRAPH_BASE_SIZE 1
 
@@ -70,7 +71,7 @@ void print_vertices_edge( link *graph_base, int graph_base_size)
 {
   int i;
   printf( "Digraph list:\n");
-  for( i = 1; i < graph_base_size; i++)
+  for( i = 1; i <= graph_base_size; i++)
   {
     printf( "\t(%d)", i);
     print_list( graph_base[i]);
@@ -83,30 +84,6 @@ int *init_distances_array( int size)
   int i, *d = malloc( sizeof( int) * (size + 1));
   for( i = 1; i <= size; i++) d[i] = -1;
   return d;
-}
-
-int compute_distance( int to, int *way)
-{
-  int d;
-  if( way[to] == -1) return -1;
-
-  for( d = 0; way[to] > 0; d++)
-  {
-    if( way[to] == to) return d + 1; /* vertex with self loop. */
-    to = way[to];
-  }
-  return d;
-}
-
-void walk( int to, int *way)
-{
-  if( way[to] > 0)
-  {
-    if( way[to] != to) /* avoid vertex with self loop. */
-      walk( way[to], way);
-
-    printf("->(%d)", to);
-  }
 }
 
 void walk_through_the_digraph( link *graph_base, int graph_base_size)
@@ -155,12 +132,27 @@ void walk_through_the_digraph( link *graph_base, int graph_base_size)
     }
   }
 
-  distance = compute_distance( destination, distances);
-  if( distance != -1)
+  for( distance = 0, vertex = destination; distances[vertex] > 0; distance++)
+  {
+    push( vertex);
+    vertex = distances[vertex];
+    if (vertex == origin)
+    {
+      distance++; /* arrived */
+      break;
+    }
+  }
+
+  if( distance > 0)
   {
     printf("\tThe distance from %d to %d is %d:\n", origin, destination, distance);
+    fflush( stdout);
+
     printf("\t(%d)", origin);
-    walk( destination, distances);
+    while( !stack_empty())
+    {
+      printf("->(%d)", pop());
+    }
     printf("\n");
   }
   else printf("\tSorry, there is no way to arrive at %d beginning in %d.\n", destination, origin);
@@ -219,6 +211,6 @@ int main( int argc, char* argv[])
   printf( "\n--------------------------"), hit_a_key();
 
   walk_through_the_digraph( graph_base, graph_base_size);
-  printf( "\n\n######################################## FINISHING PROGRAM #########\n\n");
+  printf( "\n\n####################################################################\n\n");
   return 0;
 }

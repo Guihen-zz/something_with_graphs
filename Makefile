@@ -12,14 +12,17 @@ LDFLAGS = -L.
 RM = /bin/rm -f
 
 # -- Geracao do executavel -- #
-main: LIST.o QUEUE.o main.o
-	$(CC) $(CFLAGS) -o main main.o LIST.o QUEUE.o
+main: LIST.o QUEUE.o STACK.o main.o
+	$(CC) $(CFLAGS) -o main main.o LIST.o QUEUE.o STACK.o
 
 main.o: main.c
 	$(CC) $(CFLAGS) -c main.c 
 
 QUEUE.o: LIST.o
 	$(CC) $(CFLAGS) -c QUEUE.c
+
+STACK.o: LIST.o
+	$(CC) $(CFLAGS) -c STACK.c
 
 LIST.o:
 	$(CC) $(CFLAGS) -c LIST.c
