@@ -83,6 +83,7 @@ int main( int argc, char* argv[])
     new_edge( graph_base[vertex_from], vertex_to);
   }
 
+  printf( "Number of vertices: %d\n", graph_base_size);
   printf( "Total edges: %d\n", count_total_edges( graph_base, graph_base_size));
 
   distances = malloc( sizeof( int) * graph_base_size + 1);
