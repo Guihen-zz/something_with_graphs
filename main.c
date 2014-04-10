@@ -56,6 +56,19 @@ void print_vertices_outdegree( link *graph_base, int graph_base_size)
     printf("\tdeg+(%3d) = %d\n", i, count_edges( graph_base[i]));
 }
 
+void print_vertices_indegree( link *graph_base, int graph_base_size)
+{
+  int i, j, n;
+  printf("Indegree os vertices:\n");
+  for( i = 1; i <= graph_base_size; i++)
+  {
+    for( n = 0, j = 1; j <= graph_base_size; j++)
+      n += search( graph_base[j], i);
+
+    printf("\tdeg-(%3d) = %d\n", i, n);
+  }
+}
+
 int main( int argc, char* argv[])
 {
   FILE *input;
@@ -94,6 +107,7 @@ int main( int argc, char* argv[])
   printf( "Number of vertices: %d\n", graph_base_size);
   printf( "Total edges: %d\n", count_total_edges( graph_base, graph_base_size));
   print_vertices_outdegree( graph_base, graph_base_size);
+  print_vertices_indegree( graph_base, graph_base_size);
 
   distances = malloc( sizeof( int) * graph_base_size + 1);
   for( i = 1; i <= graph_base_size; i++)

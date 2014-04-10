@@ -19,5 +19,6 @@ struct node
 void new_edge( link vertex_from, int vertex_to);
 link init_link( void);
 int count_edges( link head);
+int search( link head, int vertex); /* returns 1 if vertex belongs to the given list. */
 
 #endif

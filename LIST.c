@@ -50,3 +50,11 @@ int count_edges( link head)
   }
   return n;
 }
+
+int search( link head, int vertex)
+{
+  link aux;
+  head->index = vertex;
+  for( aux = head->next; vertex != aux->index; aux = aux->next);
+  return aux != head;
+}
