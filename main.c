@@ -48,6 +48,14 @@ int count_total_edges( link *graph_base, int graph_base_size)
   return total_edges;
 }
 
+void print_vertices_outdegree( link *graph_base, int graph_base_size)
+{
+  int i;
+  printf("Outdegree os vertices:\n");
+  for( i = 1; i <= graph_base_size; i++)
+    printf("\tdeg+(%3d) = %d\n", i, count_edges( graph_base[i]));
+}
+
 int main( int argc, char* argv[])
 {
   FILE *input;
@@ -85,6 +93,7 @@ int main( int argc, char* argv[])
 
   printf( "Number of vertices: %d\n", graph_base_size);
   printf( "Total edges: %d\n", count_total_edges( graph_base, graph_base_size));
+  print_vertices_outdegree( graph_base, graph_base_size);
 
   distances = malloc( sizeof( int) * graph_base_size + 1);
   for( i = 1; i <= graph_base_size; i++)
