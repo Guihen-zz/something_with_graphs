@@ -84,6 +84,7 @@ int main( int argc, char* argv[])
   int vertex_from, vertex_to, i;
   int graph_base_size = INITIAL_GRAPH_BASE_SIZE, max;
   int *distances, distance, vertex;
+  int origin, destination;
   link aux, head;
   link *graph_base = init_graph_base( graph_base_size);
 
@@ -113,21 +114,25 @@ int main( int argc, char* argv[])
     new_edge( graph_base[vertex_from], vertex_to);
   }
 
-  printf("######################## Graph Informations ########################\n");
+  printf( "######################## Graph Informations ########################\n");
   printf( "Number of vertices: %d\n", graph_base_size);
   printf( "Total edges: %d\n", count_total_edges( graph_base, graph_base_size));
-  printf("--------------------------------------------------------------------\n");
+  printf( "--------------------------------------------------------------------\n");
   print_vertices_degree( graph_base, graph_base_size);
-  printf("--------------------------------------------------------------------\n");
+  printf( "--------------------------------------------------------------------\n");
   print_vertices_edge( graph_base, graph_base_size);
+  printf( "--------------------------------------------------------------------\n");
 
-
+  printf( "Walking through the graph:\n");
+  printf( "\tPlease, insert the origin vertex and the endpoint vertex: ");
+  scanf( "%d %d", &origin, &destination);
+  
   distances = malloc( sizeof( int) * graph_base_size + 1);
   for( i = 1; i <= graph_base_size; i++)
     distances[i] = -1;
 
-  enqueue( 6);
-  distances[6] = 0;
+  enqueue( origin);
+  distances[origin] = 0;
   while( !queue_empty())
   {
     vertex = dequeue();
@@ -142,7 +147,7 @@ int main( int argc, char* argv[])
     }
   }
 
-  distance = distances[1];
+  distance = distances[destination];
   while( distance > 0)
   {
     printf("%d\n", distance);
