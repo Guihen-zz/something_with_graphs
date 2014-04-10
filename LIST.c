@@ -7,6 +7,7 @@
  ******************************************************************************/
 
 #include <stdlib.h>
+#include <stdio.h>
 #include "LIST.h"
 
 /* link to a circular list. */
@@ -57,4 +58,11 @@ int search( link head, int vertex)
   head->index = vertex;
   for( aux = head->next; vertex != aux->index; aux = aux->next);
   return aux != head;
+}
+
+void print_list( link head)
+{
+  link aux;
+  for( aux = head->next; aux != head; aux = aux->next)
+    printf( "->(%d)", aux->index);
 }

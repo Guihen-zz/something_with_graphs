@@ -51,18 +51,30 @@ int count_total_edges( link *graph_base, int graph_base_size)
 void print_vertices_degree( link *graph_base, int graph_base_size)
 {
   int i, j, n;
-  printf("Outdegree os vertices:\t\t\tIndegree os vertices:\n");
+  printf( "Outdegree os vertices:\t\t\tIndegree os vertices:\n");
   for( i = 1; i <= graph_base_size; i++)
   {
     /* Outdegree: */
-    printf("\tdeg+(%3d) = %d", i, count_edges( graph_base[i]));
+    printf( "\tdeg+(%3d) = %d", i, count_edges( graph_base[i]));
 
-    printf("\t\t\t");
+    printf( "\t\t\t");
     /* Indegree: */
     for( n = 0, j = 1; j <= graph_base_size; j++)
       n += search( graph_base[j], i);
 
-    printf("\tdeg-(%3d) = %d\n", i, n);
+    printf( "\tdeg-(%3d) = %d\n", i, n);
+  }
+}
+
+void print_vertices_edge( link *graph_base, int graph_base_size)
+{
+  int i;
+  printf( "Digraph list:\n");
+  for( i = 1; i < graph_base_size; i++)
+  {
+    printf( "\t(%d)", i);
+    print_list( graph_base[i]);
+    printf( "\n");
   }
 }
 
@@ -101,9 +113,14 @@ int main( int argc, char* argv[])
     new_edge( graph_base[vertex_from], vertex_to);
   }
 
+  printf("######################## Graph Informations ########################\n");
   printf( "Number of vertices: %d\n", graph_base_size);
   printf( "Total edges: %d\n", count_total_edges( graph_base, graph_base_size));
+  printf("--------------------------------------------------------------------\n");
   print_vertices_degree( graph_base, graph_base_size);
+  printf("--------------------------------------------------------------------\n");
+  print_vertices_edge( graph_base, graph_base_size);
+
 
   distances = malloc( sizeof( int) * graph_base_size + 1);
   for( i = 1; i <= graph_base_size; i++)
