@@ -39,7 +39,14 @@ link *rezise_graph_base( link *graph_base, int graph_base_size, int new_size)
   return gb;
 }
 
+int count_total_edges( link *graph_base, int graph_base_size)
+{
+  int i, total_edges;
+  for( total_edges = 0, i = 1; i <= graph_base_size; i++)
+    total_edges += count_edges( graph_base[i]);
 
+  return total_edges;
+}
 
 int main( int argc, char* argv[])
 {
@@ -75,6 +82,8 @@ int main( int argc, char* argv[])
 
     new_edge( graph_base[vertex_from], vertex_to);
   }
+
+  printf( "Total edges: %d\n", count_total_edges( graph_base, graph_base_size));
 
   distances = malloc( sizeof( int) * graph_base_size + 1);
   for( i = 1; i <= graph_base_size; i++)
