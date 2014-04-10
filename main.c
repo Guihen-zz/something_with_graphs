@@ -166,12 +166,20 @@ void walk_through_the_digraph( link *graph_base, int graph_base_size)
   else printf("\tSorry, there is no way to arrive at %d beginning in %d.\n", destination, origin);
 }
 
+void hit_a_key()
+{
+  printf( "(Please, hit the ENTER key to continue...)"), getchar();
+  printf("\n");
+}
+
 int main( int argc, char* argv[])
 {
   FILE *input;
   int vertex_from, vertex_to;
   int graph_base_size = INITIAL_GRAPH_BASE_SIZE, max;
   link *graph_base = init_graph_base( graph_base_size);
+
+  system( "clear");
 
   if( argc != 2)
   {
@@ -202,14 +210,15 @@ int main( int argc, char* argv[])
   printf( "######################## Graph Informations ########################\n");
   printf( "Number of vertices: %d\n", graph_base_size);
   printf( "Total edges: %d\n", count_total_edges( graph_base, graph_base_size));
-  printf( "--------------------------------------------------------------------\n");
-  print_vertices_degree( graph_base, graph_base_size);
-  printf( "--------------------------------------------------------------------\n");
-  print_vertices_edge( graph_base, graph_base_size);
-  printf( "--------------------------------------------------------------------\n");
-  walk_through_the_digraph( graph_base, graph_base_size);
-  printf( "--------------------------------------------------------------------\n");
-  printf( "Finishing program...\n");
+  printf( "\n--------------------------"), hit_a_key();
 
+  print_vertices_degree( graph_base, graph_base_size);
+  printf( "\n--------------------------"), hit_a_key();
+
+  print_vertices_edge( graph_base, graph_base_size);
+  printf( "\n--------------------------"), hit_a_key();
+
+  walk_through_the_digraph( graph_base, graph_base_size);
+  printf( "\n\n######################################## FINISHING PROGRAM #########\n\n");
   return 0;
 }
