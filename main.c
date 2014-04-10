@@ -78,14 +78,99 @@ void print_vertices_edge( link *graph_base, int graph_base_size)
   }
 }
 
+int *init_distances_array( int size)
+{
+  int i, *d = malloc( sizeof( int) * (size + 1));
+  for( i = 1; i <= size; i++) d[i] = -1;
+  return d;
+}
+
+int compute_distance( int to, int *way)
+{
+  int d;
+  if( way[to] == -1) return -1;
+
+  for( d = 0; way[to] > 0; d++)
+  {
+    if( way[to] == to) return d + 1; /* vertex with self loop. */
+    to = way[to];
+  }
+  return d;
+}
+
+void walk( int to, int *way)
+{
+  if( way[to] > 0)
+  {
+    if( way[to] != to) /* avoid vertex with self loop. */
+      walk( way[to], way);
+
+    printf("->(%d)", to);
+  }
+}
+
+void walk_through_the_digraph( link *graph_base, int graph_base_size)
+{
+  int origin, destination, vertex,
+      *distances, distance;
+  link head, aux;
+
+  printf( "Walking through the graph:\n");
+  printf( " * What way do you want?\n");
+  printf( " * Please, insert the origin vertex and the endpoint vertex: ");
+  while( 1)
+  {
+    scanf( "%d %d", &origin, &destination);
+    if( origin > graph_base_size)
+    {
+      printf("\tThere is no vertex with value %d.\n", origin);
+      printf("\tPlease, insert a valid vertex for origin and endpoint: ");
+      continue;
+    }
+    
+    if( destination > graph_base_size)
+    {
+      printf("\tThere is no vertex with value %d.\n", destination);
+      printf("\tPlease, insert a valid vertex for origin and endpoint: ");
+      continue;
+    }
+
+    break;
+  }
+
+  distances = init_distances_array( graph_base_size);
+
+  enqueue( origin);
+  while( !queue_empty())
+  {
+    vertex = dequeue();
+    head = graph_base[vertex];
+    for( aux = head->next; aux != head; aux = aux->next)
+    {
+      if( distances[aux->index] == -1)
+      {
+        distances[aux->index] = vertex;
+        enqueue( aux->index);
+      }
+    }
+  }
+
+  distance = compute_distance( destination, distances);
+  if( distance != -1)
+  {
+    printf("\tThe distance from %d to %d is %d:\n", origin, destination, distance);
+    printf("\t(%d)", origin);
+    walk( destination, distances);
+    printf("\n");
+  }
+  else printf("\tSorry, there is no way to arrive at %d beginning in %d.\n", destination, origin);
+}
+
 int main( int argc, char* argv[])
 {
   FILE *input;
-  int vertex_from, vertex_to, i;
+  int vertex_from, vertex_to;
   int graph_base_size = INITIAL_GRAPH_BASE_SIZE, max;
-  int *distances, distance, vertex;
-  int origin, destination;
-  link aux, head;
   link *graph_base = init_graph_base( graph_base_size);
 
   if( argc != 2)
@@ -122,39 +207,9 @@ int main( int argc, char* argv[])
   printf( "--------------------------------------------------------------------\n");
   print_vertices_edge( graph_base, graph_base_size);
   printf( "--------------------------------------------------------------------\n");
-
-  printf( "Walking through the graph:\n");
-  printf( "\tPlease, insert the origin vertex and the endpoint vertex: ");
-  scanf( "%d %d", &origin, &destination);
-  
-  distances = malloc( sizeof( int) * graph_base_size + 1);
-  for( i = 1; i <= graph_base_size; i++)
-    distances[i] = -1;
-
-  enqueue( origin);
-  distances[origin] = 0;
-  while( !queue_empty())
-  {
-    vertex = dequeue();
-    head = graph_base[vertex];
-    for( aux = head->next; aux != head; aux = aux->next)
-    {
-      if( distances[aux->index] == -1)
-      {
-        distances[aux->index] = vertex;
-        enqueue( aux->index);
-      }
-    }
-  }
-
-  distance = distances[destination];
-  while( distance > 0)
-  {
-    printf("%d\n", distance);
-    distance = distances[distance];
-  }
-  
-  printf("Terminou\n");
+  walk_through_the_digraph( graph_base, graph_base_size);
+  printf( "--------------------------------------------------------------------\n");
+  printf( "Finishing program...\n");
 
   return 0;
 }
